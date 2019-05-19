@@ -198,6 +198,8 @@ User.schema = orango.schema({
 
 Index is an array in the options object. The following indexes are supported. ArangoDB documentation can be found here regarding each indexing type: [https://docs.arangodb.com/devel/Drivers/JS/Reference/Collection/Indexes.html](https://docs.arangodb.com/devel/Drivers/JS/Reference/Collection/Indexes.html)
 
+For any ArangoDB Index type which also accepts "unique" and "sparse" options, these values default to "false." You can provide an additional `opt` key in your index object, with a nested object that specifies those boolean key/value pairs. They will get passed during collection & index creation.
+
 #### Hash
 
 ```js
@@ -207,12 +209,32 @@ Index is an array in the options object. The following indexes are supported. Ar
 }
 ```
 
+#### Hash example with all supported options
+
+```js
+{
+  type: SCHEMA.INDEX.HASH,
+  fields: [String],
+  opts: { sparse: false, unique: true, deduplicate: true},
+}
+```
+
 #### Skip list
 
 ```js
 {
   type: SCHEMA.INDEX.SKIP_LIST,
   fields: [String]
+}
+```
+
+#### Skip list example with all supported options
+
+```js
+{
+  type: SCHEMA.INDEX.SKIP_LIST,
+  fields: [String],
+  opts: { sparse: false, unique: true, deduplicate: true},
 }
 ```
 
@@ -241,5 +263,15 @@ Index is an array in the options object. The following indexes are supported. Ar
 {
   type: SCHEMA.INDEX.HASH,
   fields: [String]
+}
+```
+
+#### Persistent example with all supported optioons
+
+```js
+{
+  type: SCHEMA.INDEX.HASH,
+  fields: [String],
+  opts: { sparse: false, unique: true },
 }
 ```
